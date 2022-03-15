@@ -1,4 +1,5 @@
-# imported from iFest 2021 Data Cleaning Module by Yaudahlah Teams
+# imported from iFest 2021 Data Cleaning Module by Yaudahlah Teams,
+# Refactored by Kaenova Mahendra Auditama (Yaudahlah Teams)
 
 import pandas as pd
 from tqdm import tqdm
@@ -15,7 +16,7 @@ class DataCleaning:
 
   def AddKamusAlay(self, new_dict:dict = {}):
     if (type(new_dict) != dict): raise TypeError("Not a valid type")
-    self.slang_word = self.slang_word.update(new_dict)
+    self.slang_word = self.slang_word | new_dict
   
   def AddStopWord(self, stopword:list = []):
     if (type(stopword) != list): raise TypeError("Not a valid type")
@@ -36,10 +37,13 @@ class DataCleaning:
       label = row[label_cols]
       
       # Process label
-      if label not in label_mapping:
-        print(f"Label {label} is not matched any label_mapping you've defined. This label will be ignored")
-        continue      
-      clean_label = label_mapping[label]
+      if label_mapping is not None:
+        if label not in label_mapping:
+          print(f"Label {label} is not matched any label_mapping you've defined. This label will be ignored")
+          continue      
+        clean_label = label_mapping[label]
+      else:
+        clean_label = label  
       
       # Process Text
       clean_sentence = self.__cleanText__(sentence, self.slang_word,

@@ -9,18 +9,21 @@ env:
   TAGS: ${{ github.sha }}
   
   # Please fill this
-  SERVICE_FOLDER: api
+  WORKDIR: api
   DOCKER_REPOSITORY: kaenova/simple-spam-detector
 
 jobs: 
   DockerImagingService:
     runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: ./$WORKDIR
     steps:
       - name: Checkout latest code
         uses: actions/checkout@v2
 
       - name: Build Docker Image
-        run: docker build -f $SERVICE_FOLDER/Dockerfile --tag "$DOCKER_REPOSITORY:$TAGS" .
+        run: docker build --tag "$DOCKER_REPOSITORY:$TAGS" .
 
       - name: DockerHub Login
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin

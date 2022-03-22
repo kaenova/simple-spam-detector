@@ -9,7 +9,6 @@ env:
   TAGS: ${{ github.sha }}
   
   # Please fill this
-  WORKDIR: api
   DOCKER_REPOSITORY: kaenova/simple-spam-detector
 
 jobs: 
@@ -17,7 +16,7 @@ jobs:
     runs-on: ubuntu-20.04
     defaults:
       run:
-        working-directory: ./$WORKDIR
+        working-directory: ./api # Don't forget to fill this
     steps:
       - name: Checkout latest code
         uses: actions/checkout@v2

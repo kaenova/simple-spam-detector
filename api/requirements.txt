@@ -1,0 +1,7 @@
+sastrawi
+tqdm
+pandas
+fastapi
+uvicorn[standard]
+pydantic
+sklearn

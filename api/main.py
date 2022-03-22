@@ -9,14 +9,15 @@ import sys
 import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
+import os
 
-with open('../model/DataCleaner.pkl', 'rb') as f:
+with open('./DataCleaner.pkl', 'rb') as f:
 	data_cleaner = pickle.load(f)
 		
-with open("../model/CountVectorizer.pkl", 'rb') as f:
+with open("./CountVectorizer.pkl", 'rb') as f:
 	tokenizer = pickle.load(f)
 		
-with open("../model/GaussianNB.pkl", 'rb') as f:
+with open("./GaussianNB.pkl", 'rb') as f:
 	model = pickle.load(f)
  
 def predictText(text:str) -> int:
@@ -52,6 +53,6 @@ async def predict(req: RequestText):
 		}
 
 if __name__ == '__main__':
-	port = 8000
-	print(f"Listening to http://127.0.0.1:{port}")
-	uvicorn.run(app, host='127.0.0.1',port=8000)
+	port = 8001
+	print(f"Listening to http://0.0.0.0:{port}")
+	uvicorn.run(app, host='0.0.0.0',port=port)
